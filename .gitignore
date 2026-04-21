@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+dist/
+build/
+.coverage
+coverage.xml
+
+# Generated benchmark stores (large binary artifacts)
+results/stores/
+results/*/stores/
+
+# Large generated data files
+results/*.h5
+results/*.db
+results/int8_gzip/stores/

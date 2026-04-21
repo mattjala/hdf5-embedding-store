@@ -1,0 +1,114 @@
+Metadata-Version: 2.4
+Name: hdf5-embedding-store
+Version: 0.1.0
+Summary: HDF5-backed embedding store for agent RAG pipelines
+License: Apache-2.0
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: h5py>=3.9
+Requires-Dist: numpy>=1.24
+Requires-Dist: scikit-learn>=1.3
+Requires-Dist: tiktoken>=0.6
+Provides-Extra: blosc
+Requires-Dist: hdf5plugin>=4.3; extra == "blosc"
+Provides-Extra: chroma
+Requires-Dist: chromadb>=0.4; extra == "chroma"
+Provides-Extra: corpus
+Requires-Dist: datasets>=2.18; extra == "corpus"
+Requires-Dist: sentence-transformers>=3.0; extra == "corpus"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+
+# hdf5-embedding-store
+
+HDF5-backed embedding stores for agent RAG pipelines. The core argument: agent semantic memory is a matrix of float32 vectors. HDF5 stores matrices natively — with compression, chunking, co-located metadata, and no infrastructure overhead.
+
+The pitch to AI engineers: drop an HDF5 store into your RAG pipeline instead of a vector DB for workloads where exact search is acceptable and deployment simplicity matters (one file, no server).
+
+## Backends
+
+| Backend | Description |
+|---|---|
+| `HDF5EmbeddingStore` | float32, optional gzip compression |
+| `HDF5CachedStore` | float32 on disk, in-memory vector cache for fast search |
+| `HDF5Int8Store` | int8 quantization — 4× storage savings, ~0.3–0.5% cosine error |
+| `HDF5Float16Store` | float16 — 2× storage savings, <0.001 cosine error |
+| `HDF5BloscStore` | float32 with Blosc2/LZ4 compression (requires `hdf5plugin`) |
+| `HDF5IVFStore` | IVF clustering — sub-linear reads at query time, ~90–95% recall |
+| `SQLiteEmbeddingStore` | float32 BLOBs — fastest `get(id)`, slowest search |
+| `NumpyEmbeddingStore` | flat `.npy` files — minimal baseline |
+| `ChromaEmbeddingStore` | Chroma HNSW — canonical vector DB comparison |
+
+## Quick start
+
+```bash
+pip install -e ".[blosc]"   # add [chroma] for ChromaDB baseline
+```
+
+```python
+from hdf5_embedding_store import HDF5CachedStore
+import numpy as np
+
+store = HDF5CachedStore("memory.h5", dimension=1536)
+store.insert(["id_0"], ["Document text"], np.random.randn(1, 1536).astype(np.float32))
+results = store.search(query_embedding, k=10)
+record = store.get("id_0")
+store.close()
+```
+
+## Benchmark results (dim=1536, top-10 cosine search)
+
+Run: `python benchmark/run.py --sizes 1000 10000 100000`
+
+### At N=100,000
+
+| Backend | MB/M | Ingest (eps) | Search (ms) | get(id) (ms) | Tokens (k=10) |
+|---|--:|--:|--:|--:|--:|
+| HDF5 (gzip-4) | 5,838 | 3,714 | 2,606 | 46.4 | 310 |
+| HDF5 (uncompressed) | 6,294 | 92,241 | 390 | 35.2 | 310 |
+| HDF5 (cached) | 6,294 | 5,351 | **21** | 0.47 | 310 |
+| **HDF5 (int8)** | **1,674** | 4,355 | **21** | 0.51 | 309 |
+| HDF5 (float16) | 3,211 | 5,158 | 23 | 0.50 | 310 |
+| HDF5 (Blosc2/LZ4) | 5,854 | 5,025 | 28 | 0.50 | 310 |
+| HDF5 (IVF) | 6,315 | 8,504 | 189 | 60.3 | 310 |
+| SQLite BLOB | 8,225 | 22,250 | 904 | **0.01** | 310 |
+| NumPy .npy | 6,203 | 1,610 | **21** | 1.1 | 310 |
+
+*MB/M = megabytes per million embeddings. eps = embeddings/second. Tokens measured with tiktoken cl100k_base on serialized top-10 results (text + id + score, no raw vectors).*
+
+### Key findings
+
+**Which backend to use:**
+- **In-process RAG, bounded memory** → `HDF5CachedStore` or `HDF5Int8Store`. Both hit ~21 ms at 100k, int8 at ¼ the storage.
+- **Storage-constrained** → `HDF5Int8Store` (4× smaller than float32, <0.5% cosine error) or `HDF5Float16Store` (2× smaller, <0.001 error).
+- **Fast point lookups (get by id)** → `SQLiteEmbeddingStore` (0.01 ms indexed lookup vs. 0.5 ms for HDF5).
+- **Fastest cold ingest** → `HDF5EmbeddingStore(compression=None)` at ~92k eps.
+- **Don't use gzip HDF5 for search** — full decompression on every query costs 2.6 s at 100k.
+- **Blosc2/LZ4** — faster decompression than gzip but similar ratios; only advantageous when reading from slow storage (not for cached workloads).
+
+**Token economy:** With synthetic data of uniform text length, all backends return identical token counts. In real workloads with variable-length documents, backends returning more metadata (SQLite includes embedding bytes, IVF includes cluster IDs) will cost more tokens when results are serialized for an LLM context window.
+
+**Honest limitations:**
+- Exact search only; HNSW (Chroma/FAISS) wins past ~500k vectors
+- No concurrent writes (HDF5 single-writer constraint)
+- No built-in filtering — post-filter or structure schema accordingly
+
+## Running tests
+
+```bash
+pytest tests/ -v
+```
+
+## Reproducing benchmarks
+
+```bash
+# Full run: 1k / 10k / 100k, all backends
+python benchmark/run.py
+
+# Skip Chroma (faster)
+python benchmark/run.py --skip-chroma
+
+# Specific backends only
+python benchmark/run.py --only hdf5_cached hdf5_int8 hdf5_float16 numpy
+```

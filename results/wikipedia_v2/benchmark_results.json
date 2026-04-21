@@ -1,0 +1,207 @@
+{
+  "_meta": {
+    "source": "wikimedia/wikipedia 20231101.en",
+    "dim": 768,
+    "query": "How does photosynthesis work in plants?"
+  },
+  "hdf5_gzip": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 9320.787069225506,
+      "size_bytes": 3570438,
+      "storage_mb_per_m": 3570.438,
+      "search_ms": 17.62025899370201,
+      "get_ms": 9.474647988099605,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 6739.121627732124,
+      "size_bytes": 35736581,
+      "storage_mb_per_m": 3573.6581,
+      "search_ms": 163.98256598040462,
+      "get_ms": 19.512227008817717,
+      "result_tokens_k10": 1669
+    }
+  },
+  "hdf5_uncompressed": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 101295.34462479014,
+      "size_bytes": 3862632,
+      "storage_mb_per_m": 3862.632,
+      "search_ms": 4.967979009961709,
+      "get_ms": 1.3446810189634562,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 98404.70140483687,
+      "size_bytes": 38633576,
+      "storage_mb_per_m": 3863.3576,
+      "search_ms": 13.812436984153464,
+      "get_ms": 11.367244005668908,
+      "result_tokens_k10": 1669
+    }
+  },
+  "hdf5_cached": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 77870.92782287498,
+      "size_bytes": 3862632,
+      "storage_mb_per_m": 3862.632,
+      "search_ms": 3.4257130173500627,
+      "get_ms": 0.4784920020028949,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 57088.983079316975,
+      "size_bytes": 38633576,
+      "storage_mb_per_m": 3863.3576,
+      "search_ms": 5.467423994559795,
+      "get_ms": 0.5505000008270144,
+      "result_tokens_k10": 1669
+    }
+  },
+  "hdf5_int8": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 89437.64656670143,
+      "size_bytes": 1513976,
+      "storage_mb_per_m": 1513.976,
+      "search_ms": 2.1373950003180653,
+      "get_ms": 0.49672098248265684,
+      "result_tokens_k10": 1146
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 71053.01969035716,
+      "size_bytes": 15084024,
+      "storage_mb_per_m": 1508.4024,
+      "search_ms": 4.284638998797163,
+      "get_ms": 0.5054509965702891,
+      "result_tokens_k10": 1670
+    }
+  },
+  "hdf5_int8_gzip": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 25128.85510444452,
+      "size_bytes": 1382300,
+      "storage_mb_per_m": 1382.3,
+      "search_ms": 4.210813989629969,
+      "get_ms": 0.48589601647108793,
+      "result_tokens_k10": 1146
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 21387.250971383346,
+      "size_bytes": 13769274,
+      "storage_mb_per_m": 1376.9274,
+      "search_ms": 1.9837410072796047,
+      "get_ms": 0.45984398457221687,
+      "result_tokens_k10": 1670
+    }
+  },
+  "hdf5_float16": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 60591.76093906517,
+      "size_bytes": 2289840,
+      "storage_mb_per_m": 2289.84,
+      "search_ms": 1.848246989538893,
+      "get_ms": 0.4573990008793771,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 44954.12735231046,
+      "size_bytes": 22905008,
+      "storage_mb_per_m": 2290.5008,
+      "search_ms": 2.5314480008091778,
+      "get_ms": 0.4877110186498612,
+      "result_tokens_k10": 1669
+    }
+  },
+  "hdf5_blosc": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 58741.0431587407,
+      "size_bytes": 3576741,
+      "storage_mb_per_m": 3576.741,
+      "search_ms": 0.8623470203019679,
+      "get_ms": 0.4703210142906755,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 37762.361649316816,
+      "size_bytes": 35776956,
+      "storage_mb_per_m": 3577.6956,
+      "search_ms": 4.575672995997593,
+      "get_ms": 0.5664239870384336,
+      "result_tokens_k10": 1669
+    }
+  },
+  "hdf5_ivf": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 1274.078602894646,
+      "size_bytes": 4225584,
+      "storage_mb_per_m": 4225.584,
+      "search_ms": 5.776897014584392,
+      "get_ms": 1.3836529979016632,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 4734.5538508471445,
+      "size_bytes": 39589416,
+      "storage_mb_per_m": 3958.9416,
+      "search_ms": 64.05725600779988,
+      "get_ms": 19.919969025067985,
+      "result_tokens_k10": 1785
+    }
+  },
+  "sqlite": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 35014.78041897385,
+      "size_bytes": 4325376,
+      "storage_mb_per_m": 4325.376,
+      "search_ms": 8.08065800811164,
+      "get_ms": 0.013898999895900488,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 29811.530930524317,
+      "size_bytes": 43257856,
+      "storage_mb_per_m": 4325.7856,
+      "search_ms": 53.55214900919236,
+      "get_ms": 0.013340002624318004,
+      "result_tokens_k10": 1669
+    }
+  },
+  "numpy": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 151094.81058722892,
+      "size_bytes": 3711156,
+      "storage_mb_per_m": 3711.156,
+      "search_ms": 0.062089995481073856,
+      "get_ms": 0.010896008461713791,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 23181.061770242202,
+      "size_bytes": 37233623,
+      "storage_mb_per_m": 3723.3623,
+      "search_ms": 2.8056500013917685,
+      "get_ms": 0.0855579855851829,
+      "result_tokens_k10": 1669
+    }
+  }
+}

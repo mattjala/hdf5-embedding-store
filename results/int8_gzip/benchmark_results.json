@@ -1,0 +1,87 @@
+{
+  "_meta": {
+    "source": "wikimedia/wikipedia 20231101.en",
+    "dim": 768,
+    "query": "How does photosynthesis work in plants?"
+  },
+  "hdf5_int8": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 78619.6775577456,
+      "size_bytes": 1513976,
+      "storage_mb_per_m": 1513.976,
+      "search_ms": 0.8021419926080853,
+      "get_ms": 0.45886600855737925,
+      "result_tokens_k10": 1146
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 46213.63979032388,
+      "size_bytes": 15084024,
+      "storage_mb_per_m": 1508.4024,
+      "search_ms": 1.9472129934001714,
+      "get_ms": 0.4611710028257221,
+      "result_tokens_k10": 1670
+    }
+  },
+  "hdf5_int8_gzip": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 26634.634802710712,
+      "size_bytes": 1382300,
+      "storage_mb_per_m": 1382.3,
+      "search_ms": 0.8288920216728002,
+      "get_ms": 0.48086702008731663,
+      "result_tokens_k10": 1146
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 22838.513941485162,
+      "size_bytes": 13769274,
+      "storage_mb_per_m": 1376.9274,
+      "search_ms": 1.9731250067707151,
+      "get_ms": 0.4697619879152626,
+      "result_tokens_k10": 1670
+    }
+  },
+  "numpy": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 150589.50550662374,
+      "size_bytes": 3711156,
+      "storage_mb_per_m": 3711.156,
+      "search_ms": 0.05329001578502357,
+      "get_ms": 0.010545976692810655,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 28356.551611542578,
+      "size_bytes": 37233623,
+      "storage_mb_per_m": 3723.3623,
+      "search_ms": 3.937100002076477,
+      "get_ms": 0.07843400817364454,
+      "result_tokens_k10": 1669
+    }
+  },
+  "sqlite": {
+    "1000": {
+      "n": 1000,
+      "throughput_eps": 13938.345622030452,
+      "size_bytes": 4325376,
+      "storage_mb_per_m": 4325.376,
+      "search_ms": 4.162969999015331,
+      "get_ms": 0.013270007912069559,
+      "result_tokens_k10": 1147
+    },
+    "10000": {
+      "n": 10000,
+      "throughput_eps": 31132.016084858406,
+      "size_bytes": 43257856,
+      "storage_mb_per_m": 4325.7856,
+      "search_ms": 47.40555299213156,
+      "get_ms": 0.012640986824408174,
+      "result_tokens_k10": 1669
+    }
+  }
+}
