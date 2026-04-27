@@ -1,8 +1,10 @@
 # hdf5-embedding-store
 
-HDF5-backed embedding stores for agent RAG pipelines. The core argument: agent semantic memory is a matrix of float32 vectors. HDF5 stores matrices natively — with compression, chunking, co-located metadata, and no infrastructure overhead.
+![CI](https://github.com/mattjala/hdf5-embedding-store/actions/workflows/ci.yml/badge.svg)
 
-The pitch to AI engineers: drop an HDF5 store into your RAG pipeline instead of a vector DB for workloads where exact search is acceptable and deployment simplicity matters (one file, no server).
+HDF5-backed embedding stores for agent RAG pipelines.  HDF5 stores matrices natively with compression, chunking, co-located metadata, and no infrastructure overhead.
+
+Drop an HDF5 store into your RAG pipeline instead of a vector DB for workloads where exact search is acceptable and deployment simplicity matters (one file, no server).
 
 ## Backends
 
@@ -33,15 +35,6 @@ results = store.search(query_embedding, k=10)
 record = store.get("id_0")
 store.close()
 ```
-
-## Benchmark results
-
-See [benchmark/results.md](benchmark/results.md) for full tables and analysis. Short version: `HDF5CachedStore` and `HDF5Int8Store` hit ~2 ms search at 10k passages on a real Wikipedia corpus; int8 at ~2.5× the storage savings.
-
-**Honest limitations:**
-- Exact search only; HNSW (Chroma/FAISS) wins past ~500k vectors
-- No concurrent writes (HDF5 single-writer constraint)
-- No built-in filtering — post-filter or structure schema accordingly
 
 ## Running tests
 
