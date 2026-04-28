@@ -1,6 +1,6 @@
 # hdf5-embedding-store
 
-![CI](https://github.com/mattjala/hdf5-embedding-store/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/mattjala/hdf5-embedding-store/actions/workflows/ci.yml/badge.svg?branch=main)
 
 HDF5-backed embedding stores for agent RAG pipelines.  HDF5 stores matrices natively with compression, chunking, co-located metadata, and no infrastructure overhead.
 
